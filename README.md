@@ -41,6 +41,7 @@ Prerequisites
  * RAxML
  * TNT
  * Muscle
+ * PHYLIP
 
 Preliminary actions
 -----
@@ -50,9 +51,11 @@ Run `swisspfam_reduce.py`. The result is two files: `swisspfam_reduced.txt` and 
 
 Run `makefile.py`. The result is the file `table.txt`.
 
-Index `pfamseq` as EMBOSS sequence database (program `dbxfasta`).
+Index `pfamseq` as EMBOSS sequence database named "pfamseq" (program `dbxfasta` of the EMBOSS package).
 
-To create files for each species set, make a directory for this species set and perform the following steps in this directory. It is assuming that files `swisspfam`, `nodes.dmp`, `names.dmp`, `speclist.txt`, `swisspfam_reduced.txt`, `swisspfam_coord.txt`, `table.txt` are in parent directory during performing all these steps.
+Make the directory named "Scripts" and put all files from this repository (scripts and `tnt_input.txt`) there.
+
+To create files for each species set, make a directory for this species set and perform the following steps in this directory. It is assuming that files `swisspfam`, `nodes.dmp`, `names.dmp`, `speclist.txt`, `swisspfam_reduced.txt`, `swisspfam_coord.txt`, `table.txt` are in the parent directory and the directory Scripts is a sister directory during performing all these steps.
 
 Step 1: Selection of species
 -----
@@ -60,30 +63,62 @@ Selection of species can be made with one of three procedures. All three procedu
 
 To select species set with the Procedure 1, choose an "embracing" taxon (e.g., Metazoa), a taxon level to select one species from each taxon of this level (e.g., family), and a number of species to select (e.g., 60). Create a directory for the new species set and make it active. Run `selectmnems.py` specifying the embracing taxon, the taxon level and the number, for example:
 
-`python2.7 selectmnems.py tax=Metazoa level=family n=60`
+`python2.7 ../Scripts/selectmnems.py tax=Metazoa level=family n=60`
 
 The result is three files: `list.txt` with selected organism mnemonics, `pfamlist.txt` with accession numbers of selected Pfam families and `<level>.txt` with names of selected taxons of the chosen level (for the example above the third file name would be `family.txt`). If Pfam contains less than n taxons of the chosen level in the embracing taxon, then the files `list.txt` and `<level>.txt` will contain less than n items.
 
 To select species with the Procedure 2, choose several embracing taxons and for each a taxon level and a number. This procedure is a generalization of the Procedure 1 and consists of repeating Procedure 1, at each repeat using a set of Pfam domains restricted by the previous repeat. Example: if taxons are Nematoda, Arthropoda and Chordata, levels are genus, family and order and numbers are 10, 25, and 25, then the procedure consists of the following chain of commands:
 
-`python2.7 selectmnems.py tax=Nematoda level=genus n=10`
+`python2.7 ../Scripts/selectmnems.py tax=Nematoda level=genus n=10`
 
-mv pfamlist.txt pfamlist1.txt
+`mv pfamlist.txt pfamlist1.txt`
 
-mv list.txt list1.txt
+`mv list.txt list1.txt`
 
-`python2.7 selectmnems.py tax=Arthropoda level=family n=25 pfam=pfamlist1.txt`
+`python2.7 ../Scripts/selectmnems.py tax=Arthropoda level=family n=25 pfam=pfamlist1.txt`
 
-mv pfamlist.txt pfamlist2.txt
+`mv pfamlist.txt pfamlist2.txt`
 
-mv list.txt list2.txt
+`mv list.txt list2.txt`
 
-`python2.7 selectmnems.py tax=Chordata level=order n=25 pfam=pfamlist2.txt`
+`python2.7 ../Scripts/selectmnems.py tax=Chordata level=order n=25 pfam=pfamlist2.txt`
 
-The result
+`cat list1.txt list2.txt >> list.txt`
+
+Procedure 3 differs from the Procedure 2 by excluding some subtaxons from the embracing taxon. Example:
+
+`python2.7 ../Scripts/selectmnems.py tax=Metazoa exc=Chordata,Arthropoda,Nematoda level=genus n=20 pfam=pfamlist3.txt`
 
 Step 2: extracting sequences of domains
 -----
+Run `extractseq.py`, which creates the directory "Domains" with subdirectories named by Pfam accessions from the file `pfamlist.txt`. Each subdirectory contain files with names consisting of organism mnemonics from the file `list.txt` with extension ".fasta". Each file contains sequences of all domains of the certain Pfam family from the certain organism, in fasta format.
 
+Step 3: creating alignments of orthologous groups
+-----
+Choose some prefix for the files with sequences and alignments of orthologous groups of this set.
 
-Run 
+Run `blast_ort.py`. This script creates the directory "Sequences" with fasta files containing sequences of found orthologous groups.
+
+Copy the file `stable.py` to the current directory and run `muscle.sh`.
+
+Step 4: building the reference tree
+-----
+Run `makegoodlist.py` to create the files `goodlist.txt` and `badlist.txt`.
+
+Run `fastme.py` to infer trees from orthologous groups with the program FastME.
+
+Run `raxml.sh` to infer trees from orthologous groups with the program RAxML.
+
+Run `tnt.sh` to infer trees from orthologous groups with the program TNT.
+
+...
+
+Step 5: create subalignments
+-----
+Run `selection.py`.
+
+Combined sets
+-----
+The above steps 1–5 create alignments of one species set. To create Combined sets of alignments of 15, 30 and 45 each, the script `pfs-c.py` was used. In it a number of parameters of the current version of Phylobench are fixed. These parameters are:
+ * the lists of archaeal, bacterial and eukaryotic species sets
+ * the numbers of "only bacterial", "only eukaryotic" and "universal" Pfam families to select, each is 325
