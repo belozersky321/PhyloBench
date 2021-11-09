@@ -69,21 +69,14 @@ The result is three files: `list.txt` with selected organism mnemonics, `pfamlis
 
 To select species with the Procedure 2, choose several embracing taxons and for each a taxon level and a number. This procedure is a generalization of the Procedure 1 and consists of repeating Procedure 1, at each repeat using a set of Pfam domains restricted by the previous repeat. Example: if taxons are Nematoda, Arthropoda and Chordata, levels are genus, family and order and numbers are 10, 25, and 25, then the procedure consists of the following chain of commands:
 
-`python2.7 ../Scripts/selectmnems.py tax=Nematoda level=genus n=10`
-
-`mv pfamlist.txt pfamlist1.txt`
-
-`mv list.txt list1.txt`
-
-`python2.7 ../Scripts/selectmnems.py tax=Arthropoda level=family n=25 pfam=pfamlist1.txt`
-
-`mv pfamlist.txt pfamlist2.txt`
-
-`mv list.txt list2.txt`
-
-`python2.7 ../Scripts/selectmnems.py tax=Chordata level=order n=25 pfam=pfamlist2.txt`
-
-`cat list1.txt list2.txt >> list.txt`
+    python2.7 ../Scripts/selectmnems.py tax=Nematoda level=genus n=10
+    mv pfamlist.txt pfamlist1.txt  
+    mv list.txt list1.txt
+    python2.7 ../Scripts/selectmnems.py tax=Arthropoda level=family n=25 pfam=pfamlist1.txt
+    mv pfamlist.txt pfamlist2.txt
+    mv list.txt list2.txt
+    python2.7 ../Scripts/selectmnems.py tax=Chordata level=order n=25 pfam=pfamlist2.txt
+    cat list1.txt list2.txt >> list.txt
 
 Procedure 3 differs from the Procedure 2 by excluding some subtaxons from the embracing taxon. Example:
 
