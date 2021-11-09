@@ -47,8 +47,6 @@ Preliminary actions
 -----
 Put `swisspfam`, `nodes.dmp`, `names.dmp` and `speclist.txt` to the working directory.
 
-Run `swisspfam_reduce.py`. The result is two files: `swisspfam_reduced.txt` and `swisspfam_coord.txt`.
-
 Run `maketable.py`. The result is the file `table.txt`.
 
 Index `pfamseq` as EMBOSS sequence database named "pfamseq" (program `dbxfasta` of the EMBOSS package).
@@ -57,14 +55,15 @@ Make the directory named "Scripts" and put all files from this repository (scrip
 
 To create files for each species set, make a directory for this species set 
 and perform the following steps in this directory. 
-It is assuming that files `swisspfam`, `nodes.dmp`, `names.dmp`, `speclist.txt`, 
-`swisspfam_reduced.txt`, `swisspfam_coord.txt`, `table.txt` 
-are in the parent directory and the directory Scripts is a sister directory during performing all these steps.
+It is assuming that files `swisspfam`, `nodes.dmp`, `names.dmp`, `speclist.txt` and `table.txt` 
+are in the parent directory and the directory "Scripts" is a sister directory 
+during performing all these steps.
 
 Step 1: Selection of species
 -----
 Selection of species can be made with one of three procedures. 
-All three procedures require files `names.dmp`, `table.txt` and `swisspfam_reduced.txt` in the parent folder.
+All three procedures require files `names.dmp`, `table.txt` and `swisspfam` 
+in the parent folder.
 
 To select species set with the Procedure 1, choose an "embracing" taxon (e.g., Metazoa), 
 a taxon level to select one species from each taxon of this level (e.g., family), 
