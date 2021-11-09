@@ -1,7 +1,8 @@
 # PhyloBench
 Python 2.7 and bash scripts for a benchmark for phylogenetic programs
 
-This repository is a supplement to the paper describing PhyloBench, a benchmark for testing phylogenetic programs. It includes the following scripts:
+This repository is a part of supplementary material to the paper describing PhyloBench, 
+a benchmark for testing phylogenetic programs. It includes the following scripts:
  * selectmnems.py
  * swisspfam_reduce.py
  * maketable.py
@@ -21,6 +22,7 @@ This repository is a supplement to the paper describing PhyloBench, a benchmark 
  * pfs-c.py
 
 -----
+
 The procedure of generating files consisting PhyloBench is as follows. 
 
 Files from Internet
@@ -100,9 +102,10 @@ Run `makegoodlist.py` to create the files `goodlist.txt` and `badlist.txt`.
 
 Run `fastme.py` to infer trees from orthologous groups with the program FastME.
 
-Run `raxml.sh` to infer trees from orthologous groups with the program RAxML.
-
 Run `tnt.sh` to infer trees from orthologous groups with the program TNT.
+
+Run `raxml.sh` to infer trees from orthologous groups with the program RAxML. 
+Because RAxML is very slow, the execution may take several hours (run in background with nohup).
 
 ...
 
