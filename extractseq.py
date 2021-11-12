@@ -1,8 +1,10 @@
 #############################################################################
 #    This script is written on Python 2.7
 #    It is a part of PhyloBench. 
-#    It requires file "swisspfam" from Pfam
-#    and files "list.txt" and "pfamlist.txt" created by the script "selectmnems.py".
+#    It requires file "swisspfam" from Pfam and files "list.txt" 
+#    and "pfamlist.txt" created by the script "selectmnems.py".
+#    The file "pfamseq" from Pfam should be indexed as EMBOSS database 
+#    by dbxfasta with db name "pfamseq".
 # 
 #    Copyright (C) 2021 Sergey Spirin
 #
@@ -22,7 +24,6 @@
 #    Contact: Sergey sas@belozersky.msu.ru
 ############################################################################
 
-# pfamseq should be indexed for EMBOSS
 from os import system, mkdir, access, F_OK
 from time import ctime
 

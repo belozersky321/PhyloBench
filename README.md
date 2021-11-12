@@ -8,8 +8,10 @@ a benchmark for testing phylogenetic programs. It includes the following scripts
  * extractseq.py
  * blast_ort.py
  * muscle.sh
+ * stable.py
  * makegoodlist.py
  * infoalign.py
+ * sequence.py
  * fastme.py
  * tnt.sh
  * tnt_unput.txt
@@ -30,7 +32,6 @@ Files needed from Internet
  * `swisspfam` from http://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam33.1/swisspfam.gz
  * `pfamseq` from http://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam33.1/pfamseq.gz
  * `speclist.txt`: https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/speclist.txt
- * `stable.py` from http://www.drive5.com/muscle/stable.tar.gz
 
 Programs and packages needed to be installed
 -----
@@ -115,10 +116,17 @@ Choose some prefix for the files with sequences and alignments of orthologous gr
 
 Run `blast_ort.py`. 
 This script creates the directory "Sequences" with fasta files containing sequences of found orthologous groups.
+It takes one argument, which is a short name of the taxonomic set. 
+For example, for Actinobacteria you may choose the short name "AC" and run:
 
-Copy the file `stable.py` to the current directory and run `muscle.sh`.
+`python2.7 ../Scripts/blast_ort.py AC > blast_ort.log`
+
+Run `muscle.sh` (if necessary, change the first line of this script).
+
+`bash ../Scripts/muscle.sh`
+
 This script creates the directory "Alignments" with fasta files containing
-alignments of sound orthologous groups. 
+alignments of found orthologous groups. 
 The extension of the names of these files is ".afa".
 
 Step 4: building the reference tree
