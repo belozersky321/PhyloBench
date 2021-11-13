@@ -1,7 +1,6 @@
 ####################################################
-# This script is a part of PhyloBench
+# This bash script is a part of PhyloBench
 # Run it after blast_ort.py
-# It requires the improved version of stable.py
 ####################################################
 
 python=/usr/bin/python2.7 # !!! Change this to the actual path to Python 2.7 interpreter

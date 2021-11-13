@@ -166,16 +166,28 @@ for pfamline in pfamfile:
           if ok[q]:
             k += 1
             print ("k = %d; q = %s; orgroup: %d sequences" % (k, q, len(series[q])))
+            pfamfasta = "Sequences/" + setid + "_" + pfamid.split(".")[0] + "_" + str(k) + ".fasta"
+            outf = open(pfamfasta, "w")
             currorlist = list(series[q])
             shuffle(currorlist)
             for seq in currorlist:
               org = seq.split("/")[0].split("_")[1]
               fasta = "Domains/" + pfamid + "/" + org + ".fasta"
               usa = fasta + ":" + seq.replace('/', '_')
-              os.system("seqret " + usa + " stdout -auto >> Sets/" + pfamid + "/set" + str(k) + ".fasta")
-              pfamfasta = "Sequences/" + setid + "_" + pfamid.split(".")[0] + "_" +str(k) + ".fasta"
-              os.system("descseq " + usa + " -name " + org + " -des " + "\" \"" " stdout -auto >> " + pfamfasta)
+              os.system("seqret " + usa + " -filter >> Sets/" + pfamid + "/set" + str(k) + ".fasta")
+              command = ["seqret", usa, "-osformat2", "plain", "-filter"]
+              seqret = Popen(command, stdout = PIPE, stderr = PIPE)
+              (plainseq, err) = seqret.communicate()
+              if err: print "seqret", q, seq, err
+              else:
+                command = ["descseq", "-name", org, "-sformat1", "plain", "-filter"]
+                descseq = Popen(command, stdin = PIPE, stdout = PIPE, stderr = PIPE)
+                (fastaseq, err) = descseq.communicate(plainseq)
+                if err: print "descseq", q, seq, err
+                else:
+                  outf.write(fastaseq)
             # for
+            outf.close()
           # if good
         # for
         N += k
