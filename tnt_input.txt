@@ -1,0 +1,9 @@
+MXRAM 3000;
+procedure infile.nex;
+log tnt.out;
+taxname =;
+tsave *temp.tre;
+mult;
+save 0;
+tsave /;
+quit;

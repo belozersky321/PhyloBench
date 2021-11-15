@@ -8,17 +8,13 @@ a benchmark for testing phylogenetic programs. It includes the following scripts
  * extractseq.py
  * blast_ort.py
  * muscle.sh
- * stable.py
  * makegoodlist.py
- * infoalign.py
- * sequence.py
  * fastme.py
  * tnt.sh
  * tnt_unput.txt
  * convert.py
  * raxml.sh
  * consense-ncbi.py
- * newick.py
  * selection.py
  * pfs-c.py
 
@@ -32,6 +28,7 @@ Files needed from Internet
  * `swisspfam` from http://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam33.1/swisspfam.gz
  * `pfamseq` from http://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam33.1/pfamseq.gz
  * `speclist.txt`: https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/speclist.txt
+ * `stable.py` from http://www.drive5.com/muscle/stable.tar.gz
 
 Programs and packages needed to be installed
 -----
@@ -104,9 +101,9 @@ Procedure 3 differs from the Procedure 2 by excluding some subtaxons from the em
 Step 2: extracting sequences of domains
 -----
 Run `extractseq.py`, which creates the directory "Domains" with subdirectories named by 
-Pfam accessions from the file `pfamlist.txt`. 
-Each subdirectory contain files with names consisting of organism mnemonics 
-from the file `list.txt` with extension ".fasta". 
+Pfam accessions listed in the file `pfamlist.txt`. 
+Each subdirectory contains files with names consisting of organism mnemonics 
+listed in the file `list.txt`, with extension ".fasta". 
 Each file contains sequences of all domains of the certain Pfam family from the certain organism, 
 in fasta format.
 
@@ -121,7 +118,9 @@ For example, for Actinobacteria you may choose the short name "AC" and run:
 
 `python2.7 ../Scripts/blast_ort.py AC > blast_ort.log`
 
-Run `muscle.sh` (if necessary, change the first line of this script).
+Copy the file `stable.py` to the directory "Scripts". 
+If necessary, change the first line of `muscle.sh` (specify the actual path to the Python 2.7 interpreter).
+Run `muscle.sh`:
 
 `bash ../Scripts/muscle.sh`
 
@@ -135,14 +134,23 @@ Run `makegoodlist.py` to create the files `goodlist.txt` and `badlist.txt`.
 
 Run `fastme.py` to infer trees from orthologous groups with the program FastME.
 
-Run `tnt.sh` to infer trees from orthologous groups with the program TNT.
+Run the bash script  `tnt.sh` to infer trees from orthologous groups with the program TNT.
 This script requires the files `tnt_input.txt`and `convert.py` in the sister
 directory "Scripts".
 
 Run `raxml.sh` to infer trees from orthologous groups with the program RAxML. 
 Because RAxML is very slow, the execution may take several hours (run in background with nohup).
+A good idea would be to parallelize this script by spliting the file "goodlist.txt"
+to several sublists and running `raxml.sh` in parallel with different sublists as input:
+    bash ../Scripts/raxml.sh part1.txt
+    bash ../Scripts/raxml.sh part2.txt
+    ...
 
-...
+After all trees are inferred, run the script `consense-ncbi.py` to create 
+two files: `ncbi.tre` and `ncbi-consense.tre`. Both contains trees in Newick format,
+the first one is the (usually unresolved) tree from the NCBI taxonomy, 
+the second one is the (usually fully resilved) tree obtained from the first one
+by adding branches form the inferred trees.
 
 Step 5: create subalignments
 -----

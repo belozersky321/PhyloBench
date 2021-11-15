@@ -30,9 +30,20 @@ from subprocess import Popen, PIPE
 
 pfamlistname = "pfamlist.txt"  # Pfam ID's
 mnemlistname = "list.txt"  # Mnemonics of species
-setid = argv[1] # AC Actinobacteria, AG for Archaea-genus etc.
 
-specfile = file(mnemlistname, "r")
+if not os.access(mnemlistname, os.F_OK):
+  print "The file {} must be in the current folder".format(mnemlistname)
+  exit(1)
+if not os.access(pfamlistname, os.F_OK):
+  print "The file {} must be in the current folder".format(pfamlistname)
+  exit(1)
+try:
+  setid = argv[1] # AC Actinobacteria, AG for Archaea-genus etc.
+except Exception:
+  print "Short name is not specified, set to \"XX\""
+  setid = "XX"
+
+specfile = open(mnemlistname, "r")
 speclist = specfile.readlines()
 specfile.close()
 
@@ -60,7 +71,7 @@ for pfamline in pfamfile:
       numbers[ss] = int(out) # How many representatives of the species in the Pfam family
     # for 
     
-    # find the minimal number
+    # find the minimum number
     minspec = speclist[0].strip()
     minnum = numbers[minspec]
     for species in numbers:
@@ -134,7 +145,7 @@ for pfamline in pfamfile:
 
       # Check series for intersecting 
       num = 0
-      serlist = series.keys() # sequences of minimal species 
+      serlist = series.keys() # sequences of the minimal species 
       sernum = len(serlist)
       if sernum > 1:
         for i in range(sernum):
