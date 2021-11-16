@@ -154,16 +154,28 @@ by adding branches form the inferred trees.
 
 Step 5: create subalignments
 -----
-Run `selection.py`.
+Run `selection.py` three times to generate subalignments of 15, 30 and 45 sequences each.
 
-...
+    python2.7 ../Scripts selection.py 15
+    python2.7 ../Scripts selection.py 30
+    python2.7 ../Scripts selection.py 45
+
 
 Combined sets
 -----
 The above steps 1–5 create alignments of one species set. 
 To create Combined sets of alignments of 15, 30 and 45 each, the script `pfs-c.py` was used. 
-In this script, it a number of parameters of the current version of Phylobench are fixed. 
+In this script, several parameters of the current version of Phylobench are fixed. 
 These parameters are:
- * the lists of archaeal, bacterial and eukaryotic species sets
+ * the lists of archaeal, bacterial and eukaryotic species sets and their short names:
+   archaeal sets are "AG" and "AR", beacterial are "AC", "FI", "OB" and "PB", and eukaryotic
+   are "AS", "CH", "EB", "FB", "MA" and "ST";
  * the numbers of "only bacterial", "only eukaryotic" and "universal" Pfam families to select, each is 325
 Edit this script to change these settings.
+
+The script `pfs-c.py` must be run from the main working directory, which is parent to all 
+directories of the species sets.
+
+`python2.7 Scripts/pfs-c.py`
+
+The result is the folder "Combined" with three subfolders, with 15- 30- and 45-sequence alignments.
