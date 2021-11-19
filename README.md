@@ -167,7 +167,7 @@ Combined sets
 The above steps 1–5 create alignments of one species set. 
 To create Combined sets of alignments of 15, 30 and 45 each, the script `pfs-c.py` was used. 
 In this script, the lists of archaeal, bacterial and eukaryotic species sets and their short names 
-of the current version of Phylobench are fixed. 
+are fixed according to the current version of PhyloBench.
 Namely,  archaeal sets are "AG" and "AR", bacterial sets are "AC", "FI", "OB" and "PB", and eukaryotic
 sets are "AS", "CH", "EB", "FB", "MA" and "ST".
 Edit this script to create Combined sets from different taxonimic sets.
