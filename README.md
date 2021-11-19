@@ -142,7 +142,7 @@ directory "Scripts".
 Run `raxml.sh` to infer trees from orthologous groups with the program RAxML. 
 Because RAxML is very slow, the execution may take several hours (run in background with nohup).
 A good idea would be to parallelize this script by spliting the file "goodlist.txt"
-to several sublists and running `raxml.sh` in parallel with different sublists as input:
+to several sublists and running `raxml.sh` in parallel with different sublists as input, e.g.:
 
     bash ../Scripts/raxml.sh part1.txt
     bash ../Scripts/raxml.sh part2.txt
@@ -151,7 +151,7 @@ to several sublists and running `raxml.sh` in parallel with different sublists a
 After all trees are inferred, run the script `consense-ncbi.py` to create 
 two files: `ncbi.tre` and `ncbi-consense.tre`. Both contains trees in Newick format,
 the first one is the (usually unresolved) tree from the NCBI taxonomy, 
-the second one is the (usually fully resilved) tree obtained from the first one
+the second one is the (usually fully resolved) tree obtained from the first one
 by adding branches form the inferred trees.
 
 Step 5: create subalignments
