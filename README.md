@@ -11,13 +11,13 @@ a benchmark for testing phylogenetic programs. It includes the following scripts
  * makegoodlist.py
  * fastme.py
  * tnt.sh
- * tnt_unput.txt
  * convert.py
  * raxml.sh
  * consense-ncbi.py
  * selection.py
  * pfs-c.py
 
+and the file "tnt-input.txt" needed for "tnt.sh".
 -----
 
 Here the procedure of generating files consisting PhyloBench is described. 
@@ -160,7 +160,6 @@ Run `selection.py` three times to generate subalignments of 15, 30 and 45 sequen
     python2.7 ../Scripts selection.py 15
     python2.7 ../Scripts selection.py 30
     python2.7 ../Scripts selection.py 45
-
 
 Combined sets
 -----
