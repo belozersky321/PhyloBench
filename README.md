@@ -142,6 +142,7 @@ Run `raxml.sh` to infer trees from orthologous groups with the program RAxML.
 Because RAxML is very slow, the execution may take several hours (run in background with nohup).
 A good idea would be to parallelize this script by spliting the file "goodlist.txt"
 to several sublists and running `raxml.sh` in parallel with different sublists as input:
+
     bash ../Scripts/raxml.sh part1.txt
     bash ../Scripts/raxml.sh part2.txt
     ...
