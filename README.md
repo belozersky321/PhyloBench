@@ -25,7 +25,7 @@ Here the procedure of generating files consisting PhyloBench is described.
 
 Files needed from Internet 
 -----
- * `names.dmp` and `nodes.dmp` from the archive https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdmp.tar.gz
+ * `names.dmp` and `nodes.dmp` from the archive https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz
  * `swisspfam` from http://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam33.1/swisspfam.gz
  * `pfamseq` from http://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam33.1/pfamseq.gz
  * `speclist.txt`: https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/speclist.txt
