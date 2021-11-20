@@ -6,7 +6,7 @@
 #    It is assumed that short names "AR" and "AG" are for archeael alignments,
 #    short names "AC", "FI", "OB" and "PB" are for bacterial alignments
 #    and short names "AS", "CH", "EB", "FB", "MA", "ST" are for eukaryotic alignments
-#    This script creates the subfolder Combined with combined alignments sets.
+#    This script creates the subfolder "Combined" with combined alignments sets.
 # 
 #    Copyright (C) 2021 Sergey Spirin
 #
@@ -75,15 +75,23 @@ bacset = set(bacall.keys())
 oeukset = eukset - bacset
 obacset = bacset - eukset
 univset = eukset & bacset
-print len(oeukset), len(obacset), len(univset)
+print "{} only eukaryotic Pfam families".format(len(oeukset))
+print "{} only bacterial Pfam families".format(len(obacset))
+print "{} universal Pfam families".format(len(univset))
 
 n = len(arcall)
-n1 = n/2
-n2 = n - n1  
+if n > 0:
+  n1 = min(n/2, len(oeukset), len(obacset))
+  n2 = min(n - n1, len(univset))
+  combueuk = sample(univset, n2)
+  combubac = sample(univset, n2)
+else:
+  n1 = min(len(oeukset), len(obacset))
+  combueuk = univset
+  combubac = univset
+
 comboeuk = sample(oeukset, n1)
 combobac = sample(obacset, n1)
-combueuk = sample(univset, n2)
-combubac = sample(univset, n2)
 
 if not os.path.isdir("Combined"): 
   os.mkdir("Combined")
