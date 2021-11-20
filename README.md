@@ -25,7 +25,7 @@ Here the procedure of generating files consisting PhyloBench is described.
 
 Files needed from Internet 
 -----
- * `names.dmp` and `nodes.dmp` from the archive https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdump.tar.gz
+ * `names.dmp` and `nodes.dmp` from the archive https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/taxdmp.tar.gz
  * `swisspfam` from http://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam33.1/swisspfam.gz
  * `pfamseq` from http://ftp.ebi.ac.uk/pub/databases/Pfam/releases/Pfam33.1/pfamseq.gz
  * `speclist.txt`: https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/docs/speclist.txt
@@ -49,6 +49,30 @@ Put `swisspfam`, `nodes.dmp`, `names.dmp` and `speclist.txt` to the working dire
 Run `maketable.py`. The result is the file `table.txt`.
 
 Index `pfamseq` as EMBOSS sequence database named "pfamseq" (program `dbxfasta` of the EMBOSS package).
+In the original file "pfamseq", ID and AC of sequences are in non-standard order (first AC, then ID).
+Thus we changed their order with the command:
+
+`sed 's/>\([A-Z0-9\.]*\) \([A-Z0-9]*_[A-Z0-9]*\) />\2 \1 /' pfamseq > pfamseq.fasta`
+
+Now, the indexing command is as follows:
+
+`dbxfasta -dbname pfamseq -dbresource pfamseq -idformat idacc -directory $pfamdir -filenames pfamseq.fasta -fields id,acc -compressed -outfile pfamseq.dbxfasta -release 33.1 -date $today`
+
+(here "$pfamdir" is for the folder with "pfamseq.fasta" and "$today" is for the current date).
+The script `extractseq.py` refers to "pfamseq-id" assuming that pfamseq is indexed this way.
+The file emboss.default should contain the following lines:
+
+    DB pfamseq [
+        type: P
+        method: emboss
+        format: fasta
+        directory: <specify here the directory with "pfamseq.fasta">
+        file: pfamseq.fasta
+        indexdirectory: <specify here the directory were dbxfasta was run>
+        release: "33.1"
+        fields: "id acc"
+        comment: "Pfam sequences from pfamseq release 33.1"
+    ]
 
 Make the directory named "Scripts" and put all files from this repository (scripts and `tnt_input.txt`) there.
 
