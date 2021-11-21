@@ -101,9 +101,14 @@ for num in ["15", "30", "45"]:
   if not os.path.isdir("Combined/" + num + "/Alignments"): 
     os.mkdir("Combined/" + num + "/Alignments")
 
-for y in arcall:
-  for num in ["15", "30", "45"]:
-    os.system("cp */Selection{}/Alignments/{}.afa Combined/{}/Alignments/".format(num, y, num))
+if n > 0:
+  if n1 + n2 < len(arcall):
+    arclist = sample(arcall, n1 + n2)
+  else:
+    arclist = list(arcall)
+  for y in arclist:
+    for num in ["15", "30", "45"]:
+      os.system("cp */Selection{}/Alignments/{}.afa Combined/{}/Alignments/".format(num, y, num))
 
 for x in (comboeuk + combueuk):
   taxa = dict()

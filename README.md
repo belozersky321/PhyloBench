@@ -163,14 +163,10 @@ Run the bash script  `tnt.sh` to infer trees from orthologous groups with the pr
 This script requires the files `tnt_input.txt`and `convert.py` in the sister
 directory "Scripts".
 
-Run `raxml.sh` to infer trees from orthologous groups with the program RAxML. 
-Because RAxML is very slow, the execution may take several hours (run in background with nohup).
+Run the bash script `raxml.sh` to infer trees from orthologous groups with the program RAxML. 
+Because RAxML is very slow, the execution may take several hours or even days (run in background with nohup).
 A good idea would be to parallelize this script by spliting the file "goodlist.txt"
-to several sublists and running `raxml.sh` in parallel with different sublists as input, e.g.:
-
-    bash ../Scripts/raxml.sh part1.txt
-    bash ../Scripts/raxml.sh part2.txt
-    ...
+to several sublists and running commands of this script in parallel with different sublists as input.
 
 After all trees are inferred, run the script `consense-ncbi.py` to create 
 two files: `ncbi.tre` and `ncbi-consense.tre`. Both contains trees in Newick format,
